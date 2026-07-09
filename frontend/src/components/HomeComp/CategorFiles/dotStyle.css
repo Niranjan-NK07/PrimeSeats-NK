@@ -1,0 +1,17 @@
+/* dotStyle.css */
+.ant-carousel .slick-dots li button {
+  background: transparent; /* reset default */
+}
+
+.ant-carousel .slick-dots li button::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #9333ea; /* purple */
+}
+
+.ant-carousel .slick-dots li.slick-active button::after {
+  background-color: #7e22ce; /* darker purple for active */
+}

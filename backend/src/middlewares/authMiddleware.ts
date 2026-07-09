@@ -1,0 +1,34 @@
+import jwt from "jsonwebtoken";
+import User from "../models/User.ts";
+
+export const authMiddleware: any = async (req: any, res: any, next: any) => {
+  let token;
+  try {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+      const decoded: any = jwt.verify(
+        token,
+        process.env.JWT_SECRET || "your_jwt_secret_key",
+      );
+      req.user = await User.findById(decoded.id).select("-password");
+      next();
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  } catch (err) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+export const requireRole: any = (role: string) => {
+  return (req: any, res: any, next: any) => {
+    if (req.user && req.user.role === role) {
+      next();
+    } else {
+      return res.status(403).json({ message: "Forbidden: Insufficient role" });
+    }
+  };
+};

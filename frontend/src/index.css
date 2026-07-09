@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.ant-btn-primary:hover {
+  box-shadow: 0 0 10px rgba(59,130,246,0.5);
+}
+.ant-input, .ant-select-selector {
+  transition: all 0.2s ease;
+}

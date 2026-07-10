@@ -7,14 +7,16 @@ import {
   InputNumber,
   message,
   Select,
+  Upload,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { eventService } from "../services/eventServices";
 import { authService } from "../services/authService";
 import { useForm } from "antd/es/form/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../storeManager/hooks";
 import { getEvents } from "../storeManager/slices/eventSlice";
+import { UploadOutlined } from "@ant-design/icons";
 
 const CreateEvent: React.FC = () => {
   const { categories } = useAppSelector((state) => state.events);
@@ -24,22 +26,36 @@ const CreateEvent: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onCreateEvent: any = async (values: any) => {
-    const { title, description, venue, dateTime, totalSeats, category } =
-      values;
+    const {
+      title,
+      description,
+      venue,
+      dateTime,
+      totalSeats,
+      category,
+      pricePerSeat,
+    } = values;
     const actDate = new Date(dateTime);
+    const organizerId = authService.getUserID();
+    const imageFile =
+      values.image && values.image[0] && values.image[0].originFileObj;
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description || "");
+    formData.append("venue", venue);
+    formData.append("dateTime", actDate.toISOString());
+    formData.append("organizerId", organizerId || "");
+    formData.append("category", category);
+    formData.append("status", "upcoming");
+    formData.append("totalSeats", totalSeats.toString());
+    formData.append("pricePerSeat", pricePerSeat);
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
 
     try {
       setLoadingOnCreate(true);
-      await eventService.createEvent({
-        title,
-        description,
-        venue,
-        dateTime: actDate,
-        organizerId: authService.getUserID(),
-        category,
-        status: "upcoming",
-        totalSeats,
-      });
+      await eventService.createEvent(formData);
 
       message.success("Event created successfully!");
       navigate("/events");
@@ -56,6 +72,12 @@ const CreateEvent: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (categories?.length === 0) {
+      dispatch(getEvents());
+    }
+  }, []);
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -82,7 +104,7 @@ const CreateEvent: React.FC = () => {
         >
           <Select
             showSearch={{ optionFilterProp: "label", onSearch }}
-            placeholder="Select a person"
+            placeholder="Select a category"
             onChange={onChange}
             options={categories}
           />
@@ -108,6 +130,38 @@ const CreateEvent: React.FC = () => {
             max={30}
             placeholder="Min 1"
           />
+        </Form.Item>
+        <Form.Item
+          label="Price Per Seat"
+          name="pricePerSeat"
+          rules={[{ required: true }]}
+        >
+          <InputNumber min={1} max={1000} placeholder="in INR" />
+        </Form.Item>
+        <Form.Item
+          label="Event Image"
+          name="image"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}
+        >
+          <Upload
+            name="image"
+            listType="picture-card"
+            beforeUpload={() => false}
+            className="ml-6!"
+            maxCount={1}
+            progress={{
+              strokeColor: {
+                "0%": "#108ee9",
+                "100%": "#87d068",
+              },
+              strokeWidth: 3,
+              format: (percent) =>
+                percent && `${Number.parseFloat(percent.toFixed(2))}%`,
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
         </Form.Item>
         <Button
           htmlType="submit"

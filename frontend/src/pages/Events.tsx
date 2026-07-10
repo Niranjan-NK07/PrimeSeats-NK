@@ -52,9 +52,11 @@ const Events: React.FC = () => {
                 description={event.description}
                 date={new Date(event.dateTime).toLocaleString()}
                 location={event.venue}
-                image="/Event-PNG-Photo.png"
-                // openBookNowModal={openBookNowModal}
-                // setOpenBookModal={setOpenBookModal}
+                image={
+                  event.eventImage
+                    ? `${import.meta.env.VITE_API_BASE_URL}${event.eventImage}`
+                    : "/Event-PNG-Photo.png"
+                }
                 openBookNowModal={activeEventId === event._id}
                 setOpenBookModal={(open: boolean) =>
                   setActiveEventId(open ? event._id : null)

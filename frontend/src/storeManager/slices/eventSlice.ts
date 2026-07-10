@@ -11,6 +11,8 @@ export interface Event {
   category: string;
   status: "upcoming" | "cancelled" | "completed";
   totalSeats: number;
+  pricePerSeat: number;
+  eventImage: string;
 }
 
 interface eventState {

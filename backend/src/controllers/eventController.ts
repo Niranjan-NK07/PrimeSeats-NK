@@ -75,7 +75,12 @@ export const createEvent = async (req: any, res: any) => {
       category,
       status,
       totalSeats,
+      pricePerSeat,
+      image,
     } = req.body;
+
+    const eventImage = req.file ? `/uploads/${req.file.filename}` : image || "";
+    const totalSeatsNumber = Number(totalSeats);
 
     if (req.user.role !== "organizer") {
       return res
@@ -89,13 +94,15 @@ export const createEvent = async (req: any, res: any) => {
 
     const event = await Event.create({
       title: title.trim(),
-      description: description.trim(),
+      description: description?.trim() || "",
       venue,
       dateTime: new Date(dateTime),
       organizerId,
       category,
       status,
-      totalSeats,
+      totalSeats: totalSeatsNumber,
+      pricePerSeat,
+      eventImage,
     });
 
     await event.save();
@@ -110,8 +117,8 @@ export const createEvent = async (req: any, res: any) => {
       });
     }
 
-    return res.status(201).json({ message: "Event created!" });
+    return res.status(201).json({ message: "Event created!", event });
   } catch (err) {
-    return res.status(500).json({ message: "Server Error!" });
+    return res.status(500).json({ message: `${err}, Server Error!` });
   }
 };

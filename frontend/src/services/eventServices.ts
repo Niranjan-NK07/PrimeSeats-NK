@@ -1,15 +1,6 @@
 import { authService } from "./authService";
 
-export interface CreateEvent {
-  title: string;
-  description: string;
-  venue: string;
-  dateTime: Date;
-  organizerId: string | null;
-  category: string;
-  status: string;
-  totalSeats: number;
-}
+export type CreateEvent = FormData;
 
 export interface SearchEventsParams {
   searchValue: string;
@@ -17,7 +8,7 @@ export interface SearchEventsParams {
   location: string;
 }
 
-const getAuthHeaders = () => {
+const getAuthHeaders = (): Record<string, string> => {
   const token = authService.getToken();
   if (!token) {
     return {};
@@ -75,21 +66,13 @@ export const eventService = {
     return response.json();
   },
   createEvent: async (eventData: CreateEvent) => {
-    const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-    };
-
     const authHeaders = getAuthHeaders();
-    if (authHeaders.Authorization) {
-      headers.Authorization = authHeaders.Authorization;
-    }
-
     const response = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/events/create`,
       {
         method: "POST",
-        headers,
-        body: JSON.stringify(eventData),
+        headers: authHeaders,
+        body: eventData,
       },
     );
 

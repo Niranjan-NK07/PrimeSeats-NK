@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import Seat from "../models/Seat.ts";
 import Razorpay from "razorpay";
+import Event from "../models/Event.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -80,6 +81,12 @@ export const createOrder = async (req: any, res: any) => {
       return res.status(401).json({ error: "Unauthorized user" });
     }
 
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(401).json({ error: "No event matching!" });
+    }
+
     const seats = await Seat.find({
       _id: { $in: seatIds },
       eventId,
@@ -104,7 +111,7 @@ export const createOrder = async (req: any, res: any) => {
       return res.status(400).json({ error: "Seats not locked by you" });
     }
 
-    const amount = seats.length * 200 * 100;
+    const amount = seats.length * event.pricePerSeat * 100;
 
     const order = await razorpay.orders.create({
       amount,

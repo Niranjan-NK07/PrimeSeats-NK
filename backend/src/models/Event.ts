@@ -9,6 +9,8 @@ export interface IEvent extends Document {
   category: string;
   status: "upcoming" | "cancelled" | "completed";
   totalSeats: number;
+  eventImage: string;
+  pricePerSeat: number;
 }
 
 const eventSchema = new Schema<IEvent>(
@@ -25,6 +27,8 @@ const eventSchema = new Schema<IEvent>(
       default: "upcoming",
     },
     totalSeats: { type: Number, required: true },
+    pricePerSeat: { type: Number, required: true },
+    eventImage: { type: String, default: "" },
   },
   { timestamps: true },
 );

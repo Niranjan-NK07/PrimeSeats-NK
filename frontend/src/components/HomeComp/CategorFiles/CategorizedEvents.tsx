@@ -29,6 +29,7 @@ const CategorizedEvents: React.FC = () => {
               placement="top"
             >
               <Card
+                hoverable
                 cover={
                   <img
                     draggable={false}
@@ -37,7 +38,7 @@ const CategorizedEvents: React.FC = () => {
                     src="/Event-PNG-Photo.png"
                   />
                 }
-                className="shadow-lg cursor-pointer transition-transform duration-200 ease-in-out hover:scale-104 bg-gray-500!"
+                className="bg-gray-400!"
                 variant="outlined"
                 onClick={() => navigateToBookingPage(category)}
               >

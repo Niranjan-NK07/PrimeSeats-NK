@@ -47,17 +47,22 @@ const UpcomingEvents: React.FC = () => {
           events?.slice(0, 4)?.map((event, i) => {
             return (
               <Card
+                hoverable
                 cover={
                   <img
                     draggable={false}
                     alt="event"
                     className="h-30 w-full object-cover"
-                    src="/Event-PNG-Photo.png"
+                    src={
+                      event.eventImage
+                        ? `${import.meta.env.VITE_API_BASE_URL}${event.eventImage}`
+                        : "/Event-PNG-Photo.png"
+                    }
                   />
                 }
                 key={i}
                 variant="outlined"
-                className="shadow-lg cursor-pointer transition-transform duration-200 ease-in-out hover:scale-104"
+                // className="shadow-lg cursor-pointer transition-transform duration-200 ease-in-out hover:scale-104"
                 onClick={() => {
                   setSelectedEvent(event);
                   setIsModalOpen(true);

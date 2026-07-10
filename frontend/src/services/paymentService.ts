@@ -1,5 +1,6 @@
 import { message } from "antd";
 import { authService } from "./authService";
+import { buildApiUrl } from "./api";
 
 const getAuthHeaders = () => {
   const token = authService.getToken();
@@ -20,14 +21,11 @@ export const paymentService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/payment/create-order`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ eventId, seatIds }),
-      },
-    );
+    const response = await fetch(buildApiUrl("/payment/create-order"), {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ eventId, seatIds }),
+    });
 
     const result = await response.json();
     const order = result?.order ?? result;
@@ -49,20 +47,17 @@ export const paymentService = {
       description: "Event Ticket Booking",
       order_id: order.id,
       handler: async function (response: any) {
-        const verifyRes = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/payment/verifyPayment`,
-          {
-            method: "POST",
-            headers,
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              seatIds,
-              eventId,
-            }),
-          },
-        );
+        const verifyRes = await fetch(buildApiUrl("/payment/verifyPayment"), {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            seatIds,
+            eventId,
+          }),
+        });
 
         const verifyResult = await verifyRes.json();
 

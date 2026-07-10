@@ -1,4 +1,5 @@
 import { authService } from "./authService";
+import { buildApiUrl } from "./api";
 
 export type CreateEvent = FormData;
 
@@ -27,12 +28,9 @@ export const eventService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/events/getAll`,
-      {
-        headers,
-      },
-    );
+    const response = await fetch(buildApiUrl("/events/getAll"), {
+      headers,
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -51,12 +49,9 @@ export const eventService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/events/${evntId}`,
-      {
-        headers,
-      },
-    );
+    const response = await fetch(buildApiUrl(`/events/${evntId}`), {
+      headers,
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -67,14 +62,11 @@ export const eventService = {
   },
   createEvent: async (eventData: CreateEvent) => {
     const authHeaders = getAuthHeaders();
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/events/create`,
-      {
-        method: "POST",
-        headers: authHeaders,
-        body: eventData,
-      },
-    );
+    const response = await fetch(buildApiUrl("/events/create"), {
+      method: "POST",
+      headers: authHeaders,
+      body: eventData,
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -94,7 +86,9 @@ export const eventService = {
     }
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/events/search?query=${encodeURIComponent(params.searchValue)}&category=${encodeURIComponent(params.category)}&location=${encodeURIComponent(params.location)}`,
+      buildApiUrl(
+        `/events/search?query=${encodeURIComponent(params.searchValue)}&category=${encodeURIComponent(params.category)}&location=${encodeURIComponent(params.location)}`,
+      ),
       {
         headers,
       },

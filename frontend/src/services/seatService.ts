@@ -1,4 +1,5 @@
 import { authService } from "./authService";
+import { buildApiUrl } from "./api";
 
 const getAuthHeaders = () => {
   const token = authService.getToken();
@@ -19,12 +20,9 @@ export const seatService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/seats/getAll/${eventID}`,
-      {
-        headers,
-      },
-    );
+    const response = await fetch(buildApiUrl(`/seats/getAll/${eventID}`), {
+      headers,
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -43,12 +41,9 @@ export const seatService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/seats/getAll/mySeats`,
-      {
-        headers,
-      },
-    );
+    const response = await fetch(buildApiUrl("/seats/getAll/mySeats"), {
+      headers,
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -67,14 +62,11 @@ export const seatService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/seats/lockSeat/${seatId}`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ eventId }),
-      },
-    );
+    const response = await fetch(buildApiUrl(`/seats/lockSeat/${seatId}`), {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ eventId }),
+    });
 
     if (!response.ok) {
       const error = await response.json();
@@ -93,14 +85,11 @@ export const seatService = {
       headers.Authorization = authHeaders.Authorization;
     }
 
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/seats/book`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ eventId, seatIds }),
-      },
-    );
+    const response = await fetch(buildApiUrl("/seats/book"), {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ eventId, seatIds }),
+    });
 
     if (!response.ok) {
       const error = await response.json();

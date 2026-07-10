@@ -1,3 +1,5 @@
+import { buildApiUrl } from "./api";
+
 export interface RegisterData {
   username: string;
   email: string;
@@ -12,14 +14,11 @@ export interface AuthResponse {
 export const authService = {
   register: async (data: RegisterData): Promise<AuthResponse> => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
-      );
+      const response = await fetch(buildApiUrl("/auth/register"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         const error = await response.json();
@@ -43,16 +42,13 @@ export const authService = {
   },
   login: async (username: string, password: string): Promise<AuthResponse> => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
+      const response = await fetch(buildApiUrl("/auth/login"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({ username, password }),
+      });
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message || "Login failed");
@@ -85,15 +81,12 @@ export const authService = {
     return localStorage.getItem("authID");
   },
   getUser: async (userId: string): Promise<any> => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/auth/users/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(buildApiUrl(`/auth/users/${userId}`), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || "Failed to fetch user");
@@ -102,15 +95,12 @@ export const authService = {
     return result;
   },
   getUsers: async (): Promise<any[]> => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/auth/users`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const response = await fetch(buildApiUrl("/auth/users"), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || "Failed to fetch users");
@@ -119,16 +109,13 @@ export const authService = {
     return result;
   },
   promoteOrDemote: async (userId: string, role: string): Promise<any> => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/auth/users/${userId}/role`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ role }),
+    const response = await fetch(buildApiUrl(`/auth/users/${userId}/role`), {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({ role }),
+    });
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || "Failed to promote user to organizer");

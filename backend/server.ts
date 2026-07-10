@@ -3,29 +3,37 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
-import { fileURLToPath } from "url";
 import authRouter from "./src/routes/authRoutes";
 import eventRouter from "./src/routes/eventRoutes";
 import seatRouter from "./src/routes/seatRoutes";
 import paymentRouter from "./src/routes/paymentRoutes";
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+  "https://prime-seats-nk.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+
 app.use(
   cors({
-    origin: "https://prime-seats-nk.vercel.app",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
 
 app.use(express.json());
+app.get("/health", (_req, res) => res.status(200).json({ status: "ok" }));
 app.use("/auth", authRouter);
 app.use("/events", eventRouter);
 app.use("/seats", seatRouter);

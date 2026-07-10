@@ -22,15 +22,47 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) {
         callback(null, true);
         return;
       }
-      callback(new Error("Not allowed by CORS"));
+
+      // Allow exact matches from allowlist
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      // Allow Vercel preview domains (e.g. <name>-<hash>.vercel.app)
+      try {
+        const hostname = new URL(origin).hostname;
+        if (
+          /\.vercel\.app$/.test(hostname) ||
+          /\.onrender\.com$/.test(hostname)
+        ) {
+          callback(null, true);
+          return;
+        }
+      } catch (e) {
+        // fall through to block
+      }
+
+      console.warn("Blocked CORS attempt from:", origin);
+      // Do not throw — deny CORS without turning it into a server error
+      callback(null, false);
     },
     credentials: true,
   }),
 );
+
+// Ensure preflight requests are handled explicitly
+app.options("*", cors());
+
+// Simple request logger for debugging deployed 404/OPTIONS issues
+app.use((req, _res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
+  next();
+});
 
 app.use(express.json());
 app.get("/health", (_req, res) => res.status(200).json({ status: "ok" }));
@@ -47,3 +79,15 @@ mongoose
     app.listen(port, () => console.log(`Server running on port ${port}`));
   })
   .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+// Generic error handler to ensure errors are logged and a simple response returned
+app.use((err: any, _req: any, res: any, _next: any) => {
+  console.error("Unhandled error:", err && err.stack ? err.stack : err);
+  try {
+    if (!res.headersSent) {
+      res.status(500).send("Internal Server Error");
+    }
+  } catch (e) {
+    // ignore
+  }
+});

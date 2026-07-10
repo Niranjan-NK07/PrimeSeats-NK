@@ -18,7 +18,19 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors());
-app.use(cors({ origin: "https://primeseats.vercel.app", credentials: true }));
+app.use(
+  cors({
+    origin: "prime-seats-nk-git-main-niranjan-karanth-mn-s-projects.vercel.app",
+    credentials: true,
+  }),
+);
+app.use(
+  cors({
+    origin:
+      "https://prime-seats-rndgm4epj-niranjan-karanth-mn-s-projects.vercel.app/",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/events", eventRouter);

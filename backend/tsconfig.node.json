@@ -11,5 +11,6 @@
     "lib": ["ES2020"],
     "types": ["node"]
   },
-  "include": ["**/*.ts"]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

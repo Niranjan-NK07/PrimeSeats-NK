@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Seat from "../models/Seat.ts";
+import Seat from "../models/Seat";
 
 export const getSeats = async (req: any, res: any) => {
   try {

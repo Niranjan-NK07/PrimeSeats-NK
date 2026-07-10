@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Event from "../models/Event.ts";
-import Seat from "../models/Seat.ts";
+import Event from "../models/Event";
+import Seat from "../models/Seat";
 
 export const getEvents = async (req: any, res: any) => {
   try {

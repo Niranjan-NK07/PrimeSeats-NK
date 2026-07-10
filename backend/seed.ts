@@ -1,7 +1,7 @@
 // seed.ts
 import mongoose from "mongoose";
-import Event from "./src/models/Event.ts"; // adjust path if needed
-import Seat from "./src/models/Seat.ts"; // adjust path if needed
+import Event from "./src/models/Event"; // adjust path if needed
+import Seat from "./src/models/Seat"; // adjust path if needed
 
 async function seed() {
   await mongoose.connect(

@@ -1,11 +1,11 @@
 import express from "express";
-import { authMiddleware } from "../middlewares/authMiddleware.ts";
+import { authMiddleware } from "../middlewares/authMiddleware";
 import {
   confirmBooking,
   getMySeats,
   getSeats,
   lockSeat,
-} from "../controllers/seatController.ts";
+} from "../controllers/seatController";
 
 const router = express.Router();
 

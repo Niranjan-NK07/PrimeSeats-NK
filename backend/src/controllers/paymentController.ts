@@ -1,14 +1,14 @@
 import crypto from "crypto";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+// import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import Seat from "../models/Seat.ts";
+import Seat from "../models/Seat";
 import Razorpay from "razorpay";
-import Event from "../models/Event.ts";
+import Event from "../models/Event";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

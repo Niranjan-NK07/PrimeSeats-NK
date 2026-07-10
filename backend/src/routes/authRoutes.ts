@@ -6,9 +6,9 @@ import {
   promoteToOrganizer,
   getUser,
   uploadImage,
-} from "../controllers/authController.ts";
-import upload from "../../uploadService.ts";
-import { authMiddleware } from "../middlewares/authMiddleware.ts";
+} from "../controllers/authController";
+import upload from "../../uploadService";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 

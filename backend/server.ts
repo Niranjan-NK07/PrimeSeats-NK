@@ -4,13 +4,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRouter from "./src/routes/authRoutes.ts";
-import eventRouter from "./src/routes/eventRoutes.ts";
-import seatRouter from "./src/routes/seatRoutes.ts";
-import paymentRouter from "./src/routes/paymentRoutes.ts";
+import authRouter from "./src/routes/authRoutes";
+import eventRouter from "./src/routes/eventRoutes";
+import seatRouter from "./src/routes/seatRoutes";
+import paymentRouter from "./src/routes/paymentRoutes";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 

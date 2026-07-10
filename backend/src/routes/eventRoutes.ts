@@ -4,9 +4,9 @@ import {
   getEvent,
   getEvents,
   searchEvents,
-} from "../controllers/eventController.ts";
-import { authMiddleware, requireRole } from "../middlewares/authMiddleware.ts";
-import upload from "../../uploadService.ts";
+} from "../controllers/eventController";
+import { authMiddleware, requireRole } from "../middlewares/authMiddleware";
+import upload from "../../uploadService";
 
 const router = express.Router();
 

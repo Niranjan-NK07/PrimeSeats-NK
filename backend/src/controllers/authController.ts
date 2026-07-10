@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "../models/User.ts";
+import User from "../models/User";
 
 export const Register = async (req: any, res: any) => {
   try {

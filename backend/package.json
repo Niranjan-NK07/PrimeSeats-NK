@@ -2,8 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/server.js",
+  "type": "commonjs",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node server.ts"
   },

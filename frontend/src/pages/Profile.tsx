@@ -124,124 +124,126 @@ const Profile: React.FC = () => {
   const otherUsers = users?.filter((userA) => userA?._id !== user?._id);
 
   return (
-    <div className="min-h-screen mx-auto py-10 px-6 flex flex-col items-center gap-6 bg-orange-50">
+    <div className="min-h-screen w-full bg-orange-50 py-10 px-4 sm:px-6 lg:px-10">
       {contextHolder}
-      <Card className="w-lg shadow-xl/40 flex flex-col justify-center gap-4 p-6 border! border-gray-300!">
-        <div className="flex flex-col justify-center items-center p-10">
-          <Upload
-            name="avatar"
-            listType="picture-circle"
-            className="avatar-uploader"
-            action="http://localhost:5000/auth/uploads"
-            headers={{ Authorization: `Bearer ${authService.getToken()}` }} // ✅ token
-            beforeUpload={beforeUpload}
-            onChange={handleChange}
-            onPreview={handlePreview}
-            fileList={fileList}
+      <div className="mx-auto w-full max-w-3xl">
+        <Card className="w-full shadow-xl/40 flex flex-col justify-center gap-4 p-6 sm:p-8 border! border-gray-300!">
+          <div className="flex flex-col justify-center items-center p-8 sm:p-10">
+            <Upload
+              name="avatar"
+              listType="picture-circle"
+              className="avatar-uploader"
+              action="http://localhost:5000/auth/uploads"
+              headers={{ Authorization: `Bearer ${authService.getToken()}` }} // ✅ token
+              beforeUpload={beforeUpload}
+              onChange={handleChange}
+              onPreview={handlePreview}
+              fileList={fileList}
+            >
+              {fileList.length >= 1 ? null : uploadButton}
+            </Upload>
+          </div>
+
+          <Modal
+            open={previewOpen}
+            title="Preview"
+            footer={null}
+            onCancel={() => setPreviewOpen(false)}
           >
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
-        </div>
+            <img
+              alt="preview"
+              style={{ width: "60vw", borderRadius: "50%", height: "60vh" }}
+              src={previewImage}
+            />
+          </Modal>
+
+          <div className="flex flex-col justify-between items-center border border-gray-300 p-4 rounded-lg shadow-lg gap-2">
+            <div className="flex flex-col text-center">
+              <Typography.Title level={3}>
+                {capitaliseUsername(user?.username)}
+              </Typography.Title>
+              <Typography.Text type="secondary">{user?.email}</Typography.Text>
+            </div>
+
+            <div className="mt-4">
+              <Tag color={user?.role === "organizer" ? "purple" : "blue"}>
+                {user?.role?.toUpperCase()}
+              </Tag>
+            </div>
+
+            {user?.role === "organizer" && (
+              <Button
+                className="bg-purple-600! text-white! rounded-lg! hover:bg-purple-700! transition! cursor-pointer! mt-5"
+                onClick={() => {
+                  dispatch(getUsers());
+                  setIsModalOpen(true);
+                }}
+              >
+                Manage Users
+              </Button>
+            )}
+          </div>
+        </Card>
 
         <Modal
-          open={previewOpen}
-          title="Preview"
+          title="User Management"
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
           footer={null}
-          onCancel={() => setPreviewOpen(false)}
         >
-          <img
-            alt="preview"
-            style={{ width: "60vw", borderRadius: "50%", height: "60vh" }}
-            src={previewImage}
-          />
-        </Modal>
-
-        <div className="flex flex-col justify-between items-center border border-gray-300 p-4 rounded-lg shadow-lg gap-2">
-          <div className="flex flex-col text-center">
-            <Typography.Title level={3}>
-              {capitaliseUsername(user?.username)}
-            </Typography.Title>
-            <Typography.Text type="secondary">{user?.email}</Typography.Text>
-          </div>
-
-          <div className="mt-4">
-            <Tag color={user?.role === "organizer" ? "purple" : "blue"}>
-              {user?.role?.toUpperCase()}
-            </Tag>
-          </div>
-
-          {user?.role === "organizer" && (
-            <Button
-              className="bg-purple-600! text-white! rounded-lg! hover:bg-purple-700! transition! cursor-pointer! mt-5"
-              onClick={() => {
-                dispatch(getUsers());
-                setIsModalOpen(true);
-              }}
-            >
-              Manage Users
-            </Button>
-          )}
-        </div>
-      </Card>
-
-      <Modal
-        title="User Management"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
-      >
-        <div className="max-h-80 overflow-y-auto!">
-          <div className="flex flex-col gap-4">
-            {(otherUsers ?? []).map((u) => (
-              <div
-                key={u._id}
-                className="flex justify-center items-center border border-gray-200 p-4 rounded-lg shadow-md gap-4"
-              >
-                <div className="flex items-center justify-start gap-4 w-full!">
-                  <div>
-                    <Typography.Text strong>{u.username}</Typography.Text>
-                    <Typography.Text type="secondary" className="ml-2">
-                      {u.email}
-                    </Typography.Text>
-                  </div>
-                  <Tag
-                    className="ml-2"
-                    color={u.role === "organizer" ? "purple" : "blue"}
-                  >
-                    {u.role.toUpperCase()}
-                  </Tag>
-                </div>
-                {u.role !== "organizer" && (
-                  <Popconfirm
-                    title="Are you sure you want to promote this user to Organizer?"
-                    onConfirm={() => handlePromote(u._id, "organizer")}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <Button
-                      type="primary"
-                      className="bg-purple-600! text-white! rounded-lg! hover:bg-purple-700! transition! cursor-pointer!"
-                      loading={loading}
+          <div className="max-h-80 overflow-y-auto!">
+            <div className="flex flex-col gap-4">
+              {(otherUsers ?? []).map((u) => (
+                <div
+                  key={u._id}
+                  className="flex flex-col justify-center items-start border border-gray-200 p-4 rounded-lg shadow-md gap-4 sm:flex-row sm:items-center"
+                >
+                  <div className="flex items-center justify-start gap-4 w-full!">
+                    <div>
+                      <Typography.Text strong>{u.username}</Typography.Text>
+                      <Typography.Text type="secondary" className="ml-2">
+                        {u.email}
+                      </Typography.Text>
+                    </div>
+                    <Tag
+                      className="ml-2"
+                      color={u.role === "organizer" ? "purple" : "blue"}
                     >
-                      Promote to Organizer
-                    </Button>
-                  </Popconfirm>
-                )}
-                {u.role === "organizer" && (
-                  <Popconfirm
-                    title="Are you sure you want to demote this user?"
-                    onConfirm={() => handlePromote(u._id, "attendee")}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <Button danger>Demote</Button>
-                  </Popconfirm>
-                )}
-              </div>
-            ))}
+                      {u.role.toUpperCase()}
+                    </Tag>
+                  </div>
+                  {u.role !== "organizer" && (
+                    <Popconfirm
+                      title="Are you sure you want to promote this user to Organizer?"
+                      onConfirm={() => handlePromote(u._id, "organizer")}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button
+                        type="primary"
+                        className="bg-purple-600! text-white! rounded-lg! hover:bg-purple-700! transition! cursor-pointer!"
+                        loading={loading}
+                      >
+                        Promote to Organizer
+                      </Button>
+                    </Popconfirm>
+                  )}
+                  {u.role === "organizer" && (
+                    <Popconfirm
+                      title="Are you sure you want to demote this user?"
+                      onConfirm={() => handlePromote(u._id, "attendee")}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button danger>Demote</Button>
+                    </Popconfirm>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      </div>
     </div>
   );
 };

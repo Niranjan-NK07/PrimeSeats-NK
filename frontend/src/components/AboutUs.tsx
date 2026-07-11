@@ -1,6 +1,6 @@
 const AboutUs: React.FC = () => {
   return (
-    <div className="min-h-screen px-10 py-10 bg-gray-200 flex flex-col gap-16">
+    <div className="min-h-screen px-4 py-8 bg-gray-200 flex flex-col gap-16 sm:px-6 lg:px-10">
       {/* About Us */}
       <section id="about" className="max-w-4xl mx-auto text-center">
         <h1 className="text-3xl font-bold mb-6">About Us</h1>
@@ -31,7 +31,7 @@ const AboutUs: React.FC = () => {
       {/* Contact */}
       <section
         id="contact"
-        className="max-w-4xl mx-auto text-center bg-white shadow-md rounded-lg p-8"
+        className="max-w-4xl mx-auto text-center bg-white shadow-md rounded-lg p-6 sm:p-8"
       >
         <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
         <p className="text-lg mb-4">
@@ -50,7 +50,7 @@ const AboutUs: React.FC = () => {
       {/* Privacy Policy */}
       <section
         id="privacy"
-        className="max-w-4xl mx-auto text-center bg-white shadow-md rounded-lg p-8"
+        className="max-w-4xl mx-auto text-center bg-white shadow-md rounded-lg p-6 sm:p-8"
       >
         <h2 className="text-2xl font-semibold mb-4">Privacy Policy</h2>
         <p className="text-lg mb-4">

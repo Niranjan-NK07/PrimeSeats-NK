@@ -20,7 +20,7 @@ const MyTickets: React.FC = () => {
         {mySeats?.length === 0 ? (
           <Empty />
         ) : (
-          <div className="grid grid-cols-2 gap-10 p-10">
+          <div className="grid w-full grid-cols-1 gap-6 p-4 md:grid-cols-2 md:p-10">
             {mySeats?.map((seat, i) => (
               <MyEventCard
                 seat={seat}

@@ -45,7 +45,7 @@ const MyEventCard: React.FC<MyEventCardProps> = ({ seat, eventId }) => {
         <Card
           title={event?.title}
           extra={<Tag color="green">{capitaliseUsername(seat.status)}</Tag>}
-          className="bg-linear-to-br! from-orange-400! via-white! via-80%! to-purple-500! shadow-xl/40 w-90"
+          className="bg-linear-to-br! from-orange-400! via-white! via-80%! to-purple-500! shadow-xl/40 w-full"
           loading={loading}
         >
           <div className="flex justify-between">

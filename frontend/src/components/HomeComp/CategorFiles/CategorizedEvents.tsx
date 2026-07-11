@@ -13,7 +13,7 @@ const CategorizedEvents: React.FC = () => {
   };
 
   return (
-    <div className="px-10 py-5">
+    <div className="px-4 py-5 sm:px-10">
       <Typography.Title level={4}>Browse by Category</Typography.Title>
       <Carousel
         slidesToShow={4}

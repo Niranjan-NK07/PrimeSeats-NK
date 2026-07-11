@@ -29,14 +29,14 @@ const Events: React.FC = () => {
       : events;
 
   return (
-    <div className="bg-gray-200 flex flex-col justify-center items-center">
+    <div className="bg-gray-200 flex flex-col items-center py-6 px-4 sm:px-6">
       <Card
-        style={{ width: "90%", margin: "2rem 0" }}
+        style={{ width: "100%", margin: "2rem 0", maxWidth: 1200 }}
         className="bg-gray-50! shadow-xl/40"
       >
         <h2 className="text-3xl font-bold mb-6 text-center">Upcoming Events</h2>
         {!eventId && !category && (
-          <div className="flex justify-center items-center mb-6 mx-22">
+          <div className="flex justify-center items-center mb-6 mx-auto w-full max-w-3xl px-4 sm:px-0">
             <SearchBox />
           </div>
         )}

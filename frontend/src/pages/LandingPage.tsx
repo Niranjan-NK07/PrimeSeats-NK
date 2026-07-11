@@ -29,20 +29,21 @@ const LandingPage: React.FC = () => {
     },
   ];
   return (
-    <div className="flex min-h-screen bg-linear-to-br from-blue-200 to-blue-50 text-white p-15">
-      <div className="flex w-screen shadow-xl/30 rounded-4xl bg-white">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-200 to-blue-50 p-4 text-white sm:p-6 lg:p-10">
+      <div className="flex w-full max-w-6xl flex-col overflow-hidden rounded-4xl bg-white shadow-xl/30 lg:flex-row min-w-0">
         <div
-          className="md:flex w-1/2 bg-linear-to-br from-purple-600 to-pink-500 text-white flex-col justify-center items-center rounded-4xl"
+          className="flex w-full flex-col items-center justify-center rounded-b-4xl bg-linear-to-br from-purple-600 to-pink-500 px-6 py-10 text-center text-white lg:w-1/2 lg:rounded-none lg:rounded-l-4xl lg:px-10"
           style={{ border: "1px solid black" }}
         >
-          <h1 className="text-4xl font-bold mb-4">Prime Seats 🎟️</h1>
-          <p className="text-lg opacity-90">Your Gateway to Great Events</p>
+          <h1 className="mb-4 text-3xl font-bold sm:text-4xl">
+            Prime Seats 🎟️
+          </h1>
+          <p className="text-base opacity-90 sm:text-lg">
+            Your Gateway to Great Events
+          </p>
         </div>
-        <div className="w-full md:w-1/2 flex justify-center items-center">
-          <div
-            className="bg-white rounded-4xl p-8 w-120 shadow-xl/20"
-            style={{ border: "1px solid #929292" }}
-          >
+        <div className="flex w-full items-center justify-center px-4 py-6 sm:px-6 sm:py-8 lg:w-1/2 lg:px-8 lg:py-10 min-w-0">
+          <div className="w-full max-w-md rounded-4xl border border-[#929292] bg-white p-4 shadow-xl/20 sm:p-6 md:p-8 min-w-0">
             <Tabs
               items={items}
               centered

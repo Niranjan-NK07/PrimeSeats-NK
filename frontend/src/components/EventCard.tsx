@@ -60,7 +60,7 @@ const EventCard: React.FC<EventProps> = ({
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow hover:shadow-xl/40 transition overflow-hidden w-72 flex flex-col">
+      <div className="bg-white rounded-xl shadow hover:shadow-xl/40 transition overflow-hidden w-full max-w-sm flex flex-col">
         <img src={image} alt={title} className="h-40 w-full object-cover" />
         <div className="p-4 flex flex-col grow">
           <div className="grow">
@@ -113,7 +113,8 @@ const EventCard: React.FC<EventProps> = ({
             </button>
           ),
         ]}
-        width={800}
+        width="90vw"
+        style={{ maxWidth: 800 }}
       >
         <div style={{ maxHeight: "70vh", overflowY: "auto", padding: "20px" }}>
           {seatsFromStore?.length === 0 ? (

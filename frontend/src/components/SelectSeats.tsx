@@ -34,7 +34,7 @@ const SelectSeats: React.FC<SeatProps> = ({
   }, [seats]);
 
   return (
-    <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
+    <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-10">
       {localSeats
         .slice() // make a shallow copy
         .sort((a, b) => Number(a.number) - Number(b.number))

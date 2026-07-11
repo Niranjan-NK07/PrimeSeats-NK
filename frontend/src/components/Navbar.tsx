@@ -30,11 +30,11 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="sticky top-0 bg-[#21002F] backdrop-blur-sm text-white z-10">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6">
           <Link to="/home" className="text-2xl font-bold">
             Prime Seats 🎟️
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2 justify-end w-full sm:w-auto">
             <Link
               to="/home"
               className={`hover:text-purple-600 transition-all ${isActive("/home")}`}

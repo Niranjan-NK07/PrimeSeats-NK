@@ -22,13 +22,15 @@ const SearchBox: React.FC = () => {
 
   return (
     // <div className="grid grid-cols-4 gap-20 px-10 py-2 rounded-md shadow-[0_0_10px_5px_rgba(0,0,0,0.3)]">
-    <div className="bg-white! grid grid-cols-4 gap-18 px-10 py-2 rounded-md shadow-lg">
+    <div className="bg-white! grid w-full grid-cols-1 gap-4 px-4 py-4 rounded-md shadow-lg sm:grid-cols-2 xl:grid-cols-4 sm:px-6">
       <Input
+        className="w-full"
         placeholder="Search events"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
       <Select
+        className="w-full"
         showSearch
         placeholder="Select category"
         options={categories}
@@ -36,11 +38,12 @@ const SearchBox: React.FC = () => {
         onChange={(value) => setSelectedCategory(value)}
       />
       <Input
+        className="w-full"
         placeholder="Location"
         value={selectedLocation}
         onChange={(e) => setSelectedLocation(e.target.value)}
       />
-      <div className="flex gap-2 col-span-1">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end col-span-full sm:col-span-1">
         <Button
           key="search"
           className="bg-purple-600! text-white! rounded-md! hover:bg-purple-700! cursor-pointer! px-6! py-1!"

@@ -69,15 +69,15 @@ const Register: React.FC<LoginFormProps> = ({
   return (
     <Form
       name="register"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 30 }}
+      labelCol={{ xs: { span: 24 }, sm: { span: 8 } }}
+      wrapperCol={{ xs: { span: 24 }, sm: { span: 16 } }}
       //   style={{ maxWidth: 600 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       form={registerForm}
-      className="flex flex-col justify-center min-w-100 grow"
+      className="flex flex-col justify-center min-w-0 w-full grow"
     >
       <Form.Item<FieldType>
         label="Username"

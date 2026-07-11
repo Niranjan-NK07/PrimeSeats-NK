@@ -33,14 +33,14 @@ const UpcomingEvents: React.FC = () => {
   }
 
   return (
-    <div className="px-10 py-5">
-      <div className="flex justify-between items-center">
+    <div className="px-4 py-5 sm:px-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
         <Typography.Title level={4}>Upcoming Events</Typography.Title>
         <Button type="link">
           <Link to={"/events"}>See All</Link>
         </Button>
       </div>
-      <div className="flex gap-6">
+      <div className="flex flex-wrap justify-center gap-6">
         {searchLoading ? (
           <Skeleton active />
         ) : (
@@ -48,6 +48,7 @@ const UpcomingEvents: React.FC = () => {
             return (
               <Card
                 hoverable
+                className="w-full sm:w-[48%] lg:w-[23%]"
                 cover={
                   <img
                     draggable={false}

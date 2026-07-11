@@ -88,7 +88,7 @@ const CreateEvent: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-linear-to-bl from-purple-500 via-white via-80% to-orange-500 shadow-xl/40 rounded-xl p-8 my-5">
+    <div className="w-full max-w-3xl mx-auto bg-linear-to-bl from-purple-500 via-white via-80% to-orange-500 shadow-xl/40 rounded-xl p-6 sm:p-8 my-5">
       <h2 className="text-2xl font-bold mb-6 text-center">Create New Event</h2>
       <Form layout="vertical" form={createForm} onFinish={onCreateEvent}>
         <Form.Item label="Title" name="title" rules={[{ required: true }]}>
@@ -148,7 +148,7 @@ const CreateEvent: React.FC = () => {
             name="image"
             listType="picture-card"
             beforeUpload={() => false}
-            className="ml-6!"
+            className="w-full"
             maxCount={1}
             progress={{
               strokeColor: {

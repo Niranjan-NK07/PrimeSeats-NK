@@ -55,8 +55,8 @@ app.use(
   }),
 );
 
-// Ensure preflight requests are handled explicitly (use '/*' to avoid path-to-regexp errors)
-app.options("/*", cors());
+// Ensure preflight requests are handled for all routes
+app.options("*", cors());
 
 // Simple request logger for debugging deployed 404/OPTIONS issues
 app.use((req, _res, next) => {

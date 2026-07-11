@@ -56,7 +56,7 @@ app.use(
 );
 
 // Ensure preflight requests are handled for all routes
-app.options("*", cors());
+app.options(/.*/, cors());
 
 // Simple request logger for debugging deployed 404/OPTIONS issues
 app.use((req, _res, next) => {
